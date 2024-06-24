@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>WebAssembly Example</title>
+</head>
+<body>
+   <h1>WebAssembly Example</h1>
+   <button onclick="calculateFactorial()">Calculate Factorial</button>
+   <p id="result"></p>
+   <script>
+       async function calculateFactorial() {
+           // factorial.wasm файлыг ачаална
+           const response = await fetch('./factorial.wasm');
+           const buffer = await response.arrayBuffer();
+           const wasmModule = await WebAssembly.instantiate(buffer);
+           // WASM доторх factorial функцийг дуудаж үр дүнг харуулна
+           const result = wasmModule.instance.exports.factorial(10);
+           document.getElementById('result').textContent = 'Factorial of 10 is ' + result;
+       }
+   </script>
+</body>
+</html>
